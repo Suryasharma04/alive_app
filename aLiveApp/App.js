@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useRef} from 'react';
 import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -10,7 +10,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Home from './Home.js';
 import ArtistPage from './ArtistPage.js';
-import ProfileScreen from './Profile.js';
+import ProfileScreen from './App_profile.js';
 
 function ExploreScreen() {
   return (
