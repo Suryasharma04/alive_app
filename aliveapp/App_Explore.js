@@ -149,25 +149,6 @@ const ExplorePage = () => {
         {renderContent()}
       </ScrollView>
 
-      {/* Bottom Navigation */}
-      <View style={styles.bottomNav}>
-        <TouchableOpacity>
-          <Icon name="home-outline" size={30} color="#7D7D7D" />
-          <Text style={styles.navText}>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Icon name="search-outline" size={30} color="#000" />
-          <Text style={[styles.navText, { color: '#000' }]}>Explore</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Icon name="person-outline" size={30} color="#7D7D7D" />
-          <Text style={styles.navText}>Profile</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Icon name="settings-outline" size={30} color="#7D7D7D" />
-          <Text style={styles.navText}>Settings</Text>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 };

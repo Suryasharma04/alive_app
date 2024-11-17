@@ -11,14 +11,15 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Home from './Home.js';
 import ArtistPage from './ArtistPage.js';
 import ProfileScreen from './Profile.js';
+import ExplorePage from './App_Explore.js';
 
-function ExploreScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Explore!</Text>
-    </View>
-  );
-}
+// function ExploreScreen() {
+//   return (
+//     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+//       <Text>Explore!</Text>
+//     </View>
+//   );
+// }
 
 // function ProfileScreen() {
 //   return (
@@ -92,7 +93,7 @@ export default function App() {
         })}
       >
         <Tab.Screen name="Home" component={HomeStack} />
-        <Tab.Screen name="Explore" component={ExploreScreen} />
+        <Tab.Screen name="Explore" component={ExplorePage} />
         <Tab.Screen name="Profile" component={ProfileScreen} />
         <Tab.Screen name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
