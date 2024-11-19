@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { View, Text, TouchableHighlight, StyleSheet } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
 
 function SettingsScreen( {navigation}) {
   return (
