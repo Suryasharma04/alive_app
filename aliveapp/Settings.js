@@ -5,18 +5,18 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 
-function SettingsScreen( {navigation}) {
+function SettingsScreen({ navigation }) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center',backgroundColor:'white'}}>
-	   <Text style={{fontSize:30}}>Home Screen</Text>
-    <Text>{'\n'}</Text>
-    <TouchableHighlight
-     onPress={() => navigation.navigate('Profile Settings')}
-     activeOpacity={0.6}
-     underlayColor='red'
-    >  
-   	<Text style={styles.button}>Go To Profile Settings</Text>
-    </TouchableHighlight>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white' }}>
+      <Text style={{ fontSize: 30 }}>Home Screen</Text>
+      <Text>{'\n'}</Text>
+      <TouchableHighlight
+        onPress={() => navigation.navigate('Profile Settings')}
+        activeOpacity={0.6}
+        underlayColor='red'
+      >
+        <Text style={styles.button}>Go To Profile Settings</Text>
+      </TouchableHighlight>
 
     </View>
   );
@@ -24,26 +24,26 @@ function SettingsScreen( {navigation}) {
 
 function ProfileSettingsScreen() {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center',backgroundColor:'white'  }}>
-	  <Text style={{fontSize:30, color:'black'}}>Profile Settings</Text>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white' }}>
+      <Text style={{ fontSize: 30, color: 'black' }}>Profile Settings</Text>
     </View>
   );
 }
 
-function App() {
+function SettingsPage() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-      		initialRouteName="Home"
-			screenOptions={{
-			  headerStyle: {
-          		  backgroundColor: '#f4511e',
-        		  },
-        		  headerTintColor: '#fff',
-        		  headerTitleStyle: {
-          		  fontWeight: 'bold',
-        		  },
-      		 	}}  
+        initialRouteName="Home"
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#f4511e',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
 
       >
         <Stack.Screen
@@ -60,30 +60,30 @@ function App() {
   );
 }
 const styles = StyleSheet.create({
- container: {
-  flex: 1,
-  backgroundColor: '#00ffff',
-  alignItems: 'center',
-  justifyContent: 'center',
- }, 
- button: {
-  alignItems: "center",
-  marginTop:10,
-  paddingTop:15,
-  paddingBottom:15,
-  marginLeft:30,
-  marginRight:30,
-  borderRadius:10,
-  borderWidth: 1,
-  backgroundColor: "#009966",
-  padding: 10
- },
- countContainer: {
-  alignItems: "center",
-  padding: 10,
-  backgroundColor: "#009966",
- }
+  container: {
+    flex: 1,
+    backgroundColor: '#00ffff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  button: {
+    alignItems: "center",
+    marginTop: 10,
+    paddingTop: 15,
+    paddingBottom: 15,
+    marginLeft: 30,
+    marginRight: 30,
+    borderRadius: 10,
+    borderWidth: 1,
+    backgroundColor: "#009966",
+    padding: 10
+  },
+  countContainer: {
+    alignItems: "center",
+    padding: 10,
+    backgroundColor: "#009966",
+  }
 });
 
 
-export default App;
+export default SettingsPage;

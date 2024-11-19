@@ -12,7 +12,7 @@ import Home from './Home.js';
 import ArtistPage from './ArtistPage.js';
 import ProfileScreen from './Profile.js';
 import ExplorePage from './App_Explore.js';
-import SettingsPage from './App_Settings.js';
+import SettingsPage from './Settings.js';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
