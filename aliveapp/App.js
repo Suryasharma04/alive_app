@@ -12,30 +12,7 @@ import Home from './Home.js';
 import ArtistPage from './ArtistPage.js';
 import ProfileScreen from './Profile.js';
 import ExplorePage from './App_Explore.js';
-
-// function ExploreScreen() {
-//   return (
-//     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-//       <Text>Explore!</Text>
-//     </View>
-//   );
-// }
-
-// function ProfileScreen() {
-//   return (
-//     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-//       <Text>Profile!</Text>
-//     </View>
-//   );
-// }
-
-function SettingsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings!</Text>
-    </View>
-  );
-}
+import SettingsPage from './App_Settings.js';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -102,7 +79,7 @@ export default function App() {
         <Tab.Screen name="Home" component={HomeStack} />
         <Tab.Screen name="Explore" component={ExplorePage} />
         <Tab.Screen name="Profile" component={ProfileScreen} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
+        <Tab.Screen name="Settings" component={SettingsPage} />
       </Tab.Navigator>
     </NavigationContainer>
   );
