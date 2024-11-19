@@ -12,7 +12,7 @@ import Home from './Home.js';
 import ArtistPage from './ArtistPage.js';
 import ProfileScreen from './Profile.js';
 import ExplorePage from './App_Explore.js';
-import SettingsPage from './Settings.js';
+import SettingsScreen from './Settings.js';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -35,6 +35,30 @@ function HomeStack() {
           const Component = route.params.component; // Retrieve the dynamically imported component
           return <Component item={route.params.item} />;
         }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function ProfileSettingsScreen() {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white' }}>
+      <Text style={{ fontSize: 30, color: 'black' }}>Profile Settings</Text>
+    </View>
+  );
+}
+
+function SettingsPage() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Settings"
+        component={SettingsScreen}
+      />
+      <Stack.Screen
+        name="Profile Settings"
+        component={ProfileSettingsScreen}
+        options={{ title: 'Profile Settings' }}
       />
     </Stack.Navigator>
   );

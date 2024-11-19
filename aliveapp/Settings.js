@@ -1,9 +1,6 @@
 import * as React from 'react';
 import { View, Text, TouchableHighlight, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-const Stack = createNativeStackNavigator();
 
 function SettingsScreen({ navigation }) {
   return (
@@ -22,14 +19,7 @@ function SettingsScreen({ navigation }) {
   );
 }
 
-function ProfileSettingsScreen() {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white' }}>
-      <Text style={{ fontSize: 30, color: 'black' }}>Profile Settings</Text>
-    </View>
-  );
-}
-
+/*
 function SettingsPage() {
   return (
     <NavigationContainer>
@@ -59,6 +49,7 @@ function SettingsPage() {
     </NavigationContainer>
   );
 }
+  */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -86,4 +77,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default SettingsPage;
+export default SettingsScreen;
