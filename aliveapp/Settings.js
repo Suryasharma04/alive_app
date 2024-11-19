@@ -27,6 +27,7 @@ function ProfileSettingsScreen() {
   );
 }
 
+/**
 function App() {
   return (
     <NavigationContainer>
@@ -42,6 +43,7 @@ function App() {
     </NavigationContainer>
   );
 }
+  */
 const styles = StyleSheet.create({
  container: {
   flex: 1,
@@ -69,4 +71,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default App;
+export default SettingsScreen;
