@@ -25,7 +25,7 @@ function SettingsScreen( {navigation}) {
 function ProfileSettingsScreen() {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center',backgroundColor:'white'  }}>
-	  <Text style={{fontSize:30, color:'black'}}>Details Screen</Text>
+	  <Text style={{fontSize:30, color:'black'}}>Profile Settings</Text>
     </View>
   );
 }
