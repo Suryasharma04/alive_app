@@ -43,14 +43,21 @@ const Stack = createStackNavigator();
 function HomeStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen 
-        name="Home" 
-        component={Home} 
+      <Stack.Screen
+        name="Home"
+        component={Home}
         options={{ headerShown: false }} // Hide the header to get rid of the white bar
       />
-      <Stack.Screen 
-        name="ArtistPage" 
-        component={ArtistPage} 
+      <Stack.Screen
+        name="ArtistPage"
+        component={ArtistPage}
+      />
+      <Stack.Screen
+        name="DynamicSetList"
+        component={({ route }) => {
+          const Component = route.params.component; // Retrieve the dynamically imported component
+          return <Component item={route.params.item} />;
+        }}
       />
     </Stack.Navigator>
   );
@@ -69,7 +76,7 @@ export default function App() {
             if (route.name === 'Home') {
               iconName = focused
                 ? 'home-sharp' : 'home-outline';
-                return <Ionicons name={iconName} size={24} color={color} />
+              return <Ionicons name={iconName} size={24} color={color} />
             }
             else if (route.name === 'Explore') {
               iconName = focused ? 'search' : 'search1';
