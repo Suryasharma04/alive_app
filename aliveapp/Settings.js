@@ -6,14 +6,7 @@ function SettingsScreen( {navigation}) {
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center',backgroundColor:'white'}}>
 	   <Text style={{fontSize:30}}>Home Screen</Text>
     <Text>{'\n'}</Text>
-    <TouchableHighlight
-     onPress={() => navigation.navigate('Profile Settings')}
-     activeOpacity={0.6}
-     underlayColor='red'
-    >  
-   	<Text style={styles.button}>Profile Settings</Text>
-    </TouchableHighlight>
-
+    <Text style={styles.button}>Profile Settings</Text>
     </View>
   );
 }
