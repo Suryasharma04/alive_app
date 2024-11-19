@@ -1,9 +1,6 @@
 import * as React from 'react';
 import { View, Text, TouchableHighlight, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-const Stack = createNativeStackNavigator();
 
 function SettingsScreen( {navigation}) {
   return (
@@ -15,7 +12,7 @@ function SettingsScreen( {navigation}) {
      activeOpacity={0.6}
      underlayColor='red'
     >  
-   	<Text style={styles.button}>Go To Profile Settings</Text>
+   	<Text style={styles.button}>Profile Settings</Text>
     </TouchableHighlight>
 
     </View>
@@ -33,19 +30,6 @@ function ProfileSettingsScreen() {
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator
-      		initialRouteName="Home"
-			screenOptions={{
-			  headerStyle: {
-          		  backgroundColor: '#f4511e',
-        		  },
-        		  headerTintColor: '#fff',
-        		  headerTitleStyle: {
-          		  fontWeight: 'bold',
-        		  },
-      		 	}}  
-
-      >
         <Stack.Screen
           name="Settings"
           component={SettingsScreen}
@@ -55,7 +39,6 @@ function App() {
           component={ProfileSettingsScreen}
           options={{ title: 'Profile Settings' }}
         />
-      </Stack.Navigator>
     </NavigationContainer>
   );
 }
