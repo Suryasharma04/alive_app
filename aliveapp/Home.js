@@ -14,10 +14,16 @@ const Stack = createStackNavigator();
 export default function Home() {
 
   let artistSetLists = [
-    { picture: require("./assets/austin-neill-247047-unsplash.jpg"), name: "Artist Name 1", date: "8.12.24" },
+    { picture: require("./assets/austin-neill-247047-unsplash.jpg"), name: "Artist Name", date: "8.12.24" },
     { picture: require("./assets/bwConcert.jpg"), name: "The Artist", date: "5.10.22" },
     { picture: require("./assets/istockphoto-1308631663-612x612.jpg"), name: "Another Artist Name", date: "1.1.23" },
     { picture: require("./assets/artist_profile.jpg"), name: "Cool Band", date: "8.12.24" },
+  ]
+
+  let artistVideos = [
+    { picture: require("./assets/bwConcert.jpg"), title: "Video Title", date: "1.1.24" },
+    { picture: require("./assets/image_background.jpg"), title: "Epic Band Live", date: "2.24.23" },
+    { picture: require("./assets/austin-neill-247047-unsplash.jpg"), title: "The Band Live", date: "6.27.24" },
   ]
 
   const [artist, setArtist] = useState(artistSetLists)
@@ -30,11 +36,66 @@ export default function Home() {
   };
 
   const goToSetList = (item) => {
-    const name = item.name.replace(/\s+/g, '');
-    <Stack.Screen name={name} component={SetLists.name} />
-  }
+    const name = item.name.replace(/\s+/g, ''); // Remove spaces from the name
+    const SetListComponent = SetLists[name];   // Dynamically retrieve the component
+
+    if (SetListComponent) {
+      navigation.navigate('DynamicSetList', {
+        component: SetListComponent, // Pass the retrieved component
+        item: item,                  // Pass any additional data
+      });
+    } else {
+      console.warn(`SetList for artist ${name} not found.`);
+    }
+  };
+
+
 
   const _renderSetLists = ({ item }) => (
+    <TouchableOpacity onPress={() => goToSetList(item)}>
+      <View style={styles.setList}>
+        <Image
+          source={item.picture}
+          style={styles.profilePicture}
+        />
+        <View style={styles.textContainer}>
+          <Text style={styles.artistName}>{item.name}</Text>
+          <Text style={styles.text}>{item.date}</Text>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+
+  const _renderArtists = ({ item }) => (
+    <TouchableOpacity onPress={() => navigation.navigate('ArtistPage')}>
+      <View style={styles.artist}>
+        <Image
+          source={item.picture}
+          style={styles.artistPic}
+        />
+        <View style={styles.textContainer}>
+          <Text style={styles.artistName2}>{item.name}</Text>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+
+  const _renderVideos = ({ item }) => (
+    <TouchableOpacity onPress={() => goToVideos(item)}>
+      <View style={styles.video}>
+        <Image
+          source={item.picture}
+          style={styles.videoCover}
+        />
+        <View style={styles.videoText}>
+          <Text style={styles.date}>{item.date}</Text>
+          <Text style={styles.videoName}>{item.title}</Text>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+
+  const _renderUpcomingShows = ({ item }) => (
     <TouchableOpacity onPress={() => goToSetList(item)}>
       <View style={styles.setList}>
         <Image
@@ -74,16 +135,14 @@ export default function Home() {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.horizontalScrollContainer}
           >
-            <View style={styles.video}>
-              <Image
-                source={require('./assets/concertPic1.jpg')}
-                style={styles.videoCover}
-              />
-              <View style={styles.videoText}>
-                <Text style={styles.date}>Date</Text>
-                <Text style={styles.videoName}>Video Title</Text>
-              </View>
-            </View>
+            <FlatList
+              data={artistVideos}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.horizontalScrollContainer}
+              renderItem={_renderVideos}
+              keyExtractor={(item, index) => index.toString()}
+            />
           </ScrollView>
 
           <Text style={styles.recent}>Recent Artists</Text>
@@ -92,37 +151,30 @@ export default function Home() {
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={styles.horizontalScrollContainer}
           >
-            <View style={styles.artist}>
-              <TouchableOpacity onPress={() => navigation.navigate('ArtistPage')}>
-                <Image
-                  source={require('./assets/artist_profile.jpg')}
-                  style={styles.artistPic}
-                />
-              </TouchableOpacity>
-              <View style={styles.textContainer}>
-                <Text style={styles.artistName2}>Artist Name</Text>
-              </View>
-            </View>
-            <View style={styles.artist}>
-              <Image
-                source={require('./assets/artist_profile.jpg')}
-                style={styles.artistPic}
-              />
-              <View style={styles.textContainer}>
-                <Text style={styles.artistName2}>Artist Name</Text>
-              </View>
-            </View>
-            <View style={styles.artist}>
-              <Image
-                source={require('./assets/artist_profile.jpg')}
-                style={styles.artistPic}
-              />
-              <View style={styles.textContainer}>
-                <Text style={styles.artistName2}>Artist Name</Text>
-              </View>
-            </View>
+            <FlatList
+              data={artistSetLists}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.horizontalScrollContainer}
+              renderItem={_renderArtists}
+              keyExtractor={(item, index) => index.toString()}
+            />
           </ScrollView>
-          <Text style={styles.recent}>Favorited Shows</Text>
+          <Text style={styles.recent}>Favorited Upcoming Shows</Text>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.horizontalScrollContainer}
+          >
+            <FlatList
+              data={artistSetLists}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.horizontalScrollContainer}
+              renderItem={_renderUpcomingShows}
+              keyExtractor={(item, index) => index.toString()}
+            />
+          </ScrollView>
         </ScrollView>
       </ImageBackground>
     </SafeAreaView>
@@ -210,10 +262,11 @@ const styles = StyleSheet.create({
   video: {
     flexDirection: 'column',
     backgroundColor: 'rgba(0, 0, 0, 0.0)',
-    width: 275,
+    width: 300,
     height: 210,
-    //padding: 5,
+    padding: 7,
     marginRight: 10,
+    marginLeft: -30,
     borderColor: '#eb4634',
     overflow: 'hidden',
     alignItems: 'center',
@@ -238,16 +291,17 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   date: {
-    width: 60, // Define width to create a more rounded effect
-    height: 30, // Define height to ensure the shape
-    borderRadius: 15, // Half of height for full rounding
-    paddingVertical: 7, // Optional: Adjust padding to fit content better
-    paddingHorizontal: 15, // Optional: Adjust horizontal padding for balance
+    width: 60,               // Define width to create a more rounded effect
+    height: 30,              // Define height to ensure the shape
+    borderRadius: 15,        // Half of height for full rounding
     backgroundColor: '#ddd',
-    justifyContent: 'center',
-    alignItems: 'center', // Center the text within the date container
+    justifyContent: 'center', // Center vertically
+    alignItems: 'center',    // Center horizontally
+    textAlign: 'center',     // Ensure the text is centered horizontally
+    paddingVertical: 7,
     overflow: 'hidden',
     fontFamily: 'Geologica',
+    display: 'flex',         // Add flexbox to the container to center the text
   },
   artist: {
     width: 150,
