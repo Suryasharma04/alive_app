@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
 import ArtistPage from './ArtistPage';
 import * as SetLists from './SetLists';
+import ArtistName from './SetLists/ArtistName';
 
 
 const Stack = createStackNavigator();
@@ -35,24 +36,24 @@ export default function Home() {
     setSelectedArtist(artist);
   };
 
-  const goToSetList = (item) => {
-    const name = item.name.replace(/\s+/g, ''); // Remove spaces from the name
-    const SetListComponent = SetLists[name];   // Dynamically retrieve the component
+  // const goToSetList = (item) => {
+  //   const name = item.name.replace(/\s+/g, ''); // Remove spaces from the name
+  //   const SetListComponent = SetLists[name];   // Dynamically retrieve the component
 
-    if (SetListComponent) {
-      navigation.navigate('DynamicSetList', {
-        component: SetListComponent, // Pass the retrieved component
-        item: item,                  // Pass any additional data
-      });
-    } else {
-      console.warn(`SetList for artist ${name} not found.`);
-    }
-  };
+  //   if (SetListComponent) {
+  //     navigation.navigate('DynamicSetList', {
+  //       component: SetListComponent, // Pass the retrieved component
+  //       item: item,                  // Pass any additional data
+  //     });
+  //   } else {
+  //     console.warn(`SetList for artist ${name} not found.`);
+  //   }
+  // };
 
 
 
   const _renderSetLists = ({ item }) => (
-    <TouchableOpacity onPress={() => goToSetList(item)}>
+    <TouchableOpacity onPress={() => navigation.navigate('ArtistName')}>
       <View style={styles.setList}>
         <Image
           source={item.picture}
@@ -96,7 +97,7 @@ export default function Home() {
   );
 
   const _renderUpcomingShows = ({ item }) => (
-    <TouchableOpacity onPress={() => goToSetList(item)}>
+    <TouchableOpacity onPress={() => null}>
       <View style={styles.setList}>
         <Image
           source={item.picture}

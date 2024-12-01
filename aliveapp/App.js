@@ -13,6 +13,7 @@ import ArtistPage from './ArtistPage.js';
 import ProfileScreen from './Profile.js';
 import ExplorePage from './App_Explore.js';
 import SettingsScreen from './Settings.js';
+import ArtistName from './SetLists/ArtistName';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -36,6 +37,7 @@ function HomeStack() {
           return <Component item={route.params.item} />;
         }}
       />
+      <Stack.Screen name="ArtistName" component={ArtistName} />
     </Stack.Navigator>
   );
 }
