@@ -68,7 +68,7 @@ export default function Home() {
   );
 
   const _renderArtists = ({ item }) => (
-    <TouchableOpacity onPress={() => navigation.navigate('ArtistPage')}>
+    <TouchableOpacity onPress={() => navigation.navigate("ArtistPage", { artistName: item.name })}>
       <View style={styles.artist}>
         <Image
           source={item.picture}
@@ -141,6 +141,7 @@ export default function Home() {
               horizontal
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles.horizontalScrollContainer}
+              scrollEnabled={false}
               renderItem={_renderVideos}
               keyExtractor={(item, index) => index.toString()}
             />
@@ -157,6 +158,7 @@ export default function Home() {
               horizontal
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles.horizontalScrollContainer}
+              scrollEnabled={false}
               renderItem={_renderArtists}
               keyExtractor={(item, index) => index.toString()}
             />
@@ -172,6 +174,7 @@ export default function Home() {
               horizontal
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles.horizontalScrollContainer}
+              scrollEnabled={false}
               renderItem={_renderUpcomingShows}
               keyExtractor={(item, index) => index.toString()}
             />

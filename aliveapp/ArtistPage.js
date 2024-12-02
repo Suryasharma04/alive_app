@@ -115,9 +115,14 @@ function MoreUpcomingShowsScreen({ route, navigation }) {
   );
 }
 
-function ArtistPage({ navigation }) {
+function ArtistPage({ navigation, route }) {
 
   const { artistName, setArtistName } = useArtist();
+  const artistHeader = route.params?.artistHeader || "Artist Page";
+
+  useEffect(() => {
+    navigation.setOptions({ title: artistHeader }); // Dynamically update the header title
+  }, [artistHeader]);
 
   let aPageSetLists = [
     { venue: "Great Venue, Ithaca NY", date: "10.13.24", page: "" },
@@ -212,17 +217,17 @@ export default function App() {
         <Stack.Screen
           name="ArtistPage"
           component={ArtistPage}
-          options={{ headerShown: true }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="MoreSetLists"
           component={MoreSetListsScreen}
-          options={{ headerShown: true }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="MoreShows"
           component={MoreUpcomingShowsScreen}
-          options={{ headerShown: true }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen name="SetList" component={SetListScreen} options={{ headerShown: true }} />
       </Stack.Navigator>

@@ -254,6 +254,7 @@ const ProfileScreen = () => {
       <FlatList
         data={setlists}
         renderItem={renderSetlistItem}
+        scrollEnabled={false}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.setlistContainer}
       />

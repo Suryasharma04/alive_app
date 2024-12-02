@@ -81,6 +81,7 @@ const ExplorePage = () => {
           <FlatList
             data={artists}
             keyExtractor={(item) => item.id}
+            scrollEnabled={false}
             renderItem={({ item }) => (
               <View style={[styles.item, { backgroundColor: item.color }]}>
                 <Icon name="person-circle-outline" size={40} color="#4F4F4F" />
@@ -94,6 +95,7 @@ const ExplorePage = () => {
           <FlatList
             data={songs}
             keyExtractor={(item) => item.id}
+            scrollEnabled={false}
             renderItem={({ item }) => (
               <View style={styles.item}>
                 <Icon name="musical-notes-outline" size={30} color="#4F4F4F" />

@@ -20,15 +20,19 @@ const Stack = createStackNavigator();
 
 function HomeStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={({ route }) => ({
+        title: route.name, // Default to screen name
+      })}>
       <Stack.Screen
         name="Home"
         component={Home}
-        options={{ headerShown: false }} // Hide the header to get rid of the white bar
+      //options={{ headerShown: false }} // Hide the header to get rid of the white bar
       />
       <Stack.Screen
         name="ArtistPage"
         component={ArtistPage}
+      //options={{ headerShown: false }}
       />
       <Stack.Screen
         name="DynamicSetList"
@@ -36,6 +40,7 @@ function HomeStack() {
           const Component = route.params.component; // Retrieve the dynamically imported component
           return <Component item={route.params.item} />;
         }}
+        //options={{ headerShown: false }}
       />
       <Stack.Screen name="ArtistName" component={ArtistName} />
     </Stack.Navigator>
@@ -102,10 +107,26 @@ export default function App() {
           tabBarInactiveTintColor: 'gray',
         })}
       >
-        <Tab.Screen name="Home" component={HomeStack} />
-        <Tab.Screen name="Explore" component={ExplorePage} />
-        <Tab.Screen name="Profile" component={ProfileScreen} />
-        <Tab.Screen name="Settings" component={SettingsPage} />
+        <Tab.Screen
+          name="Home"
+          component={HomeStack}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="Explore"
+          component={ExplorePage}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="Profile"
+          component={ProfileScreen}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="Settings"
+          component={SettingsPage}
+          options={{ headerShown: false }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );
