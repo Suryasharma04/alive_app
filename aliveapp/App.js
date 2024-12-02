@@ -40,11 +40,33 @@ function HomeStack() {
           const Component = route.params.component; // Retrieve the dynamically imported component
           return <Component item={route.params.item} />;
         }}
-        //options={{ headerShown: false }}
+      //options={{ headerShown: false }}
       />
       <Stack.Screen name="ArtistName" component={ArtistName} />
     </Stack.Navigator>
   );
+}
+
+function ExploreFunction() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Explore"
+        component={ExplorePage}
+      />
+    </Stack.Navigator>
+  )
+}
+
+function ProfileFunction() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Profile"
+        component={ProfileScreen}
+      />
+    </Stack.Navigator>
+  )
 }
 
 function ProfileSettingsScreen() {
@@ -114,12 +136,12 @@ export default function App() {
         />
         <Tab.Screen
           name="Explore"
-          component={ExplorePage}
+          component={ExploreFunction}
           options={{ headerShown: false }}
         />
         <Tab.Screen
           name="Profile"
-          component={ProfileScreen}
+          component={ProfileFunction}
           options={{ headerShown: false }}
         />
         <Tab.Screen
