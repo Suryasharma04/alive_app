@@ -1,31 +1,58 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, ActivityIndicator, Text } from 'react-native';
-import axios from 'axios';
 import ConcertScreen from '../components/Concert';
 
-const ArtistName = () => {
+const ArtistName = ({route}) => {
+  const { artist, dateOfShow} = route.params;
+
   const [concertData, setConcertData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [aName, setArtistName] = useState('Above & Beyond'); // Example artist
-  const [showDate, setDate] = useState('2024-07-21'); // Example date (in YYYY-MM-DD format)
+  const [error, setError] = useState(null); // Added error state
+  const [aName, setArtistName] = useState(artist); // Example artist
+  const [showDate, setDate] = useState(dateOfShow); // Example date
+
+  console.log("passed artist name:", artist);
+  console.log("passed date:", dateOfShow);
 
   useEffect(() => {
-    const fetchConcertData = async () => {
+    const getArtistData = async () => {
+      setLoading(true); // Start loading
+      setError(null); // Reset error state
+
       try {
-        const response = await axios.get('http://localhost:3000/setlists', {
-          params: { artistName: aName, date: showDate }, // Use correct variable names
-        });
-        setConcertData(response.data);
-      } catch (error) {
-        console.error('Error fetching concert data:', error.message);
+        const apiUrl = 'http://172.20.10.2:3000/setlists';
+        const queryParams = {
+          artistName: aName,
+          date: showDate,
+        };
+
+        const queryString = new URLSearchParams(queryParams).toString();
+        const fullUrl = `${apiUrl}?${queryString}`; // Correctly interpolated
+
+        //console.log('Fetching data from:', fullUrl);
+
+        const response = await fetch(fullUrl);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        //console.log(data);
+        setConcertData(data); // Update concert data
+      } catch (err) {
+        console.error('Error fetching data:', err.message);
         setError('Failed to fetch concert data. Please try again later.');
       } finally {
-        setLoading(false);
+        setLoading(false); // Stop loading
       }
     };
-    fetchConcertData();
-  }, [aName, showDate]); // Refetch data when artistName or date changes
 
+    getArtistData();
+  }, [aName, showDate]); // Re-run when artist name or date changes
+
+  console.log(concertData);
+
+  // Loading state
   if (loading) {
     return (
       <View style={styles.container}>
@@ -34,6 +61,16 @@ const ArtistName = () => {
     );
   }
 
+  // Error state
+  if (error) {
+    return (
+      <View style={styles.container}>
+        <Text>{error}</Text>
+      </View>
+    );
+  }
+
+  // No data state
   if (!concertData || concertData.length === 0) {
     return (
       <View style={styles.container}>
@@ -42,17 +79,36 @@ const ArtistName = () => {
     );
   }
 
-  const { artistName, venue, address, date, setList, videos } = concertData[0]; 
+
+
+  //const [concert] = concertData[0];
+  //console.log(concertData[0]);
+
+  // Destructure properties from the object
+  const {
+    artist_name: artistName,
+    date,
+    venue_name: venue,
+    venue_address: address,
+    setlist_songs: setList,
+    videos,
+  } = concertData[0];
+
+  //console.log(data);
+
+  //concert data is just the full .json string right now, so figure out how to destructure the .json data
+
+  console.log('Set List =', setList);
 
   return (
     <View style={styles.container}>
-      <ConcertScreen 
-        artistName={aName}
+      <ConcertScreen
+        artistName={artistName}
         venue={venue}
         address={address}
-        date={showDate}
+        date={date.substring(0, 10)}
         setList={setList.split(',')}  // Convert to array if needed
-        videoThumbnails={videos.split(',')}  // Convert to array if needed
+        videoThumbnails={videos || ''}  // Convert to array if needed
       />
     </View>
   );
@@ -61,83 +117,10 @@ const ArtistName = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#f7f7f7',
   },
-  navBar: {
-    marginTop: 30,
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 16,
-  },
-  artistName: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginLeft: 10,
-  },
-  infoContainer: {
-    alignItems: 'center',
-    padding: 16,
-  },
-  image: {
-    width: 300,
-    height: 200,
-    borderRadius: 8,
-  },
-  venue: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginVertical: 8,
-  },
-  address: {
-    fontSize: 14,
-    color: '#555',
-  },
-  date: {
-    fontSize: 16,
-    color: '#000',
-    marginTop: 4,
-  },
-  setListContainer: {
-    margin: 16,
-    padding: 16,
-    borderRadius: 8,
-    backgroundColor: '#333',
-  },
-  setListTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#fff',
-    marginBottom: 8,
-  },
-  setList: {
-    paddingHorizontal: 8,
-  },
-  songName: {
-    fontSize: 16,
-    color: '#fff',
-    paddingVertical: 4,
-  },
-  encore: {
-    fontWeight: 'bold',
-  },
-  videosTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginHorizontal: 16,
-    marginTop: 16,
-  },
-  videoContainer: {
-    flexDirection: 'row',
-    paddingVertical: 16,
-    paddingHorizontal: 16,
-  },
-  videoThumbnail: {
-    width: 120,
-    height: 80,
-    borderRadius: 8,
-    marginRight: 10,
-  },
 });
-
 
 export default ArtistName;

@@ -15,10 +15,10 @@ const Stack = createStackNavigator();
 export default function Home() {
 
   let artistSetLists = [
-    { picture: require("./assets/austin-neill-247047-unsplash.jpg"), name: "Artist Name", date: "8.12.24" },
-    { picture: require("./assets/bwConcert.jpg"), name: "The Artist", date: "5.10.22" },
-    { picture: require("./assets/istockphoto-1308631663-612x612.jpg"), name: "Another Artist Name", date: "1.1.23" },
-    { picture: require("./assets/artist_profile.jpg"), name: "Cool Band", date: "8.12.24" },
+    { picture: require("./assets/austin-neill-247047-unsplash.jpg"), name: "Goose", date: "11.12.2024" },
+    { picture: require("./assets/bwConcert.jpg"), name: "Dead & Company", date: "8.3.2024" },
+    { picture: require("./assets/istockphoto-1308631663-612x612.jpg"), name: "Above & Beyond", date: "3.17.2024" },
+    { picture: require("./assets/artist_profile.jpg"), name: "The Cherry Blues Project", date: "1.25.2014" },
   ]
 
   let artistVideos = [
@@ -36,24 +36,23 @@ export default function Home() {
     setSelectedArtist(artist);
   };
 
-  // const goToSetList = (item) => {
-  //   const name = item.name.replace(/\s+/g, ''); // Remove spaces from the name
-  //   const SetListComponent = SetLists[name];   // Dynamically retrieve the component
+  const goToSetList = (item) => {
+    const [month, day, year] = item.date.split('.');
+    const showDate = year.concat("-", month, "-", day);
 
-  //   if (SetListComponent) {
-  //     navigation.navigate('DynamicSetList', {
-  //       component: SetListComponent, // Pass the retrieved component
-  //       item: item,                  // Pass any additional data
-  //     });
-  //   } else {
-  //     console.warn(`SetList for artist ${name} not found.`);
-  //   }
-  // };
+    console.log("name: ", item.name);
+    console.log("date:", showDate);
+
+    navigation.navigate('ArtistName', {
+      artist: item.name,
+      dateOfShow: showDate,
+    });
+  };
 
 
 
   const _renderSetLists = ({ item }) => (
-    <TouchableOpacity onPress={() => navigation.navigate('ArtistName')}>
+    <TouchableOpacity onPress={() => goToSetList(item)}>
       <View style={styles.setList}>
         <Image
           source={item.picture}

@@ -25,6 +25,7 @@ db.connect((err) => {
 // Define API routes
 app.get('/setlists', async (req, res) => {
     const { artistName, date } = req.query; // Read query params
+    //console.log("called app.get/setlists");
 
     let query = `
         SELECT 
@@ -63,9 +64,10 @@ app.get('/setlists', async (req, res) => {
 
     try {
         const [rows] = await db.promise().query(query, queryParams);
+        //console.log("node got query result: " + rows[0])
         res.json(rows); // Return the filtered results
     } catch (error) {
-        console.error('Error fetching concerts:', error.message);
+        console.log('Error fetching concerts:', error.message);
         res.status(500).json({ error: 'Error fetching concerts' });
     }
 });

@@ -54,6 +54,7 @@ const ExplorePage = () => {
           <FlatList
             data={concerts}
             keyExtractor={(item) => item.id}
+            scrollEnabled={false}
             renderItem={({ item }) => (
               <View style={styles.item}>
                 <Icon name="calendar-outline" size={30} color="#4F4F4F" />

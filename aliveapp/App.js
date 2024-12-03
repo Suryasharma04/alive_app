@@ -40,9 +40,11 @@ function HomeStack() {
           const Component = route.params.component; // Retrieve the dynamically imported component
           return <Component item={route.params.item} />;
         }}
-      //options={{ headerShown: false }}
+        //options={{ headerShown: false }}
       />
-      <Stack.Screen name="ArtistName" component={ArtistName} />
+      <Stack.Screen
+        name="ArtistName"
+        component={ArtistName}/>
     </Stack.Navigator>
   );
 }
