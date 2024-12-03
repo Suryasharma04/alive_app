@@ -71,6 +71,8 @@ function ProfileFunction() {
   )
 }
 
+// Settings Pages
+
 function ProfileSettingsScreen() {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white' }}>
@@ -78,6 +80,63 @@ function ProfileSettingsScreen() {
     </View>
   );
 }
+
+function AccountSettingsScreen() {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white' }}>
+      <Text style={{ fontSize: 30, color: 'black' }}>Account Settings</Text>
+    </View>
+  );
+}
+
+function FollowedArtistsScreen() {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white' }}>
+      <Text style={{ fontSize: 30, color: 'black' }}>Followed Artists</Text>
+    </View>
+  );
+}
+
+function SavedVideosScreen() {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white' }}>
+      <Text style={{ fontSize: 30, color: 'black' }}>Saved Videos</Text>
+    </View>
+  );
+}
+
+function SavedSetlistsScreen() {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white' }}>
+      <Text style={{ fontSize: 30, color: 'black' }}>Saved Setlists</Text>
+    </View>
+  );
+}
+
+function LikedPhotosScreen() {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white' }}>
+      <Text style={{ fontSize: 30, color: 'black' }}>Liked Photos</Text>
+    </View>
+  );
+}
+
+function ConnectScreen() {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white' }}>
+      <Text style={{ fontSize: 30, color: 'black' }}>Connect to Streaming Services</Text>
+    </View>
+  );
+}
+
+function NotificationsScreen() {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white' }}>
+      <Text style={{ fontSize: 30, color: 'black' }}>Notifications</Text>
+    </View>
+  );
+}
+
 
 function SettingsPage() {
   return (
@@ -90,6 +149,41 @@ function SettingsPage() {
         name="Profile Settings"
         component={ProfileSettingsScreen}
         options={{ title: 'Profile Settings' }}
+      />
+      <Stack.Screen
+        name="Account Settings"
+        component={AccountSettingsScreen}
+        options={{ title: 'Account Settings' }}
+      />
+      <Stack.Screen
+        name="Followed Artists"
+        component={FollowedArtistsScreen}
+        options={{ title: 'Followed Artists' }}
+      />
+      <Stack.Screen
+        name="Saved Videos"
+        component={SavedVideosScreen}
+        options={{ title: 'Saved Videos' }}
+      />
+      <Stack.Screen
+        name="Saved Setlists"
+        component={SavedSetlistsScreen}
+        options={{ title: 'Saved Setlists' }}
+      />
+      <Stack.Screen
+        name="Liked Photos"
+        component={LikedPhotosScreen}
+        options={{ title: 'Liked Photos' }}
+      />
+      <Stack.Screen
+        name="Connect"
+        component={ConnectScreen}
+        options={{ title: 'Connect to Streaming Services' }}
+      />
+      <Stack.Screen
+        name="Notifications"
+        component={NotificationsScreen}
+        options={{ title: 'Notifications' }}
       />
     </Stack.Navigator>
   );

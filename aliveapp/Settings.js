@@ -4,76 +4,88 @@ import { NavigationContainer } from '@react-navigation/native';
 
 function SettingsScreen({ navigation }) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: 'white' }}>
-      <Text style={{ fontSize: 30 }}>Home Screen</Text>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: "#c2b9b6" }}>
+      <Text style={{ fontSize: 30 }}>Settings</Text>
       <Text>{'\n'}</Text>
       <TouchableHighlight
         onPress={() => navigation.navigate('Profile Settings')}
         activeOpacity={0.6}
-        underlayColor='red'
+        underlayColor='blue'
       >
-        <Text style={styles.button}>Go To Profile Settings</Text>
+        <Text style={styles.button}>Profile Settings</Text>
       </TouchableHighlight>
 
+      <TouchableHighlight
+        onPress={() => navigation.navigate('Account Settings')}
+        activeOpacity={0.6}
+        underlayColor='blue'
+      >
+        <Text style={styles.button}>Account Settings</Text>
+      </TouchableHighlight>
+
+      <TouchableHighlight
+        onPress={() => navigation.navigate('Followed Artists')}
+        activeOpacity={0.6}
+        underlayColor='blue'
+      >
+        <Text style={styles.button}>Followed Artists</Text>
+      </TouchableHighlight>
+
+      <TouchableHighlight
+        onPress={() => navigation.navigate('Saved Videos')}
+        activeOpacity={0.6}
+        underlayColor='blue'
+      >
+        <Text style={styles.button}>Saved Videos</Text>
+      </TouchableHighlight>
+
+      <TouchableHighlight
+        onPress={() => navigation.navigate('Saved Setlists')}
+        activeOpacity={0.6}
+        underlayColor='blue'
+      >
+        <Text style={styles.button}>Saved Setlists</Text>
+      </TouchableHighlight>
+
+      <TouchableHighlight
+        onPress={() => navigation.navigate('Liked Photos')}
+        activeOpacity={0.6}
+        underlayColor='blue'
+      >
+        <Text style={styles.button}>Liked Photos</Text>
+      </TouchableHighlight>
+
+      <TouchableHighlight
+        onPress={() => navigation.navigate('Connect')}
+        activeOpacity={0.6}
+        underlayColor='blue'
+      >
+        <Text style={styles.button}>Connect to Streaming Services</Text>
+      </TouchableHighlight>
+
+      <TouchableHighlight
+        onPress={() => navigation.navigate('Notifications')}
+        activeOpacity={0.6}
+        underlayColor='blue'
+      >
+        <Text style={styles.button}>Notifications</Text>
+      </TouchableHighlight>
     </View>
   );
 }
 
-/*
-function SettingsPage() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="Home"
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: '#f4511e',
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-        }}
-
-      >
-        <Stack.Screen
-          name="Settings"
-          component={SettingsScreen}
-        />
-        <Stack.Screen
-          name="Profile Settings"
-          component={ProfileSettingsScreen}
-          options={{ title: 'Profile Settings' }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-}
-  */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#00ffff',
+    backgroundColor: '#c2b9b6',
     alignItems: 'center',
     justifyContent: 'center',
   },
   button: {
-    alignItems: "center",
-    marginTop: 10,
-    paddingTop: 15,
-    paddingBottom: 15,
-    marginLeft: 30,
-    marginRight: 30,
-    borderRadius: 10,
-    borderWidth: 1,
-    backgroundColor: "#009966",
+    alignItems: "left",
+    backgroundColor: "#c2b9b6",
     padding: 10
   },
-  countContainer: {
-    alignItems: "center",
-    padding: 10,
-    backgroundColor: "#009966",
-  }
 });
 
 
