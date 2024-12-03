@@ -4,8 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 function SettingsScreen({ navigation }) {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: "#c2b9b6" }}>
-      <Text style={{ fontSize: 30 }}>Settings</Text>
+    <View style={{ flex: 1, alignItems: 'left', justifyContent: 'left', backgroundColor: "#c2b9b6" }}>
       <Text>{'\n'}</Text>
       <TouchableHighlight
         onPress={() => navigation.navigate('Profile Settings')}
@@ -84,7 +83,8 @@ const styles = StyleSheet.create({
   button: {
     alignItems: "left",
     backgroundColor: "#c2b9b6",
-    padding: 10
+    padding: 10,
+    fontSize: 20
   },
 });
 
