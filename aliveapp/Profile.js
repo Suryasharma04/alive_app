@@ -1,165 +1,9 @@
-// import React from 'react';
-// import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native';
-// import { NavigationContainer } from '@react-navigation/native';
-// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-// import Icon from 'react-native-vector-icons/Ionicons';
-
-// export default function ProfileScreen () {
-//   return (
-//     <ScrollView style={styles.container}>
-//       {/* Header Section */}
-//       <View style={styles.header}>
-//         <Image style={styles.profileImage} source={{ uri: 'https://via.placeholder.com/100' }} />
-//         <View>
-//           <Text style={styles.username}>Username</Text>
-//           <Text style={styles.joinedDate}>JOINED MM/DD/YYYY</Text>
-//           <Text style={styles.userStats}># Set lists made</Text>
-//           <Text style={styles.userStats}># Videos posted</Text>
-//           <Text style={styles.userStats}># Photos posted</Text>
-//         </View>
-//       </View>
-
-//       {/* Videos Section */}
-//       <Text style={styles.sectionTitle}>Videos</Text>
-//       <ScrollView horizontal style={styles.horizontalScroll}>
-//         <View style={styles.videoCard}>
-//           <Image style={styles.videoImage} source={{ uri: 'https://via.placeholder.com/150' }} />
-//           <Text style={styles.videoDescription}>Cool Band Live | Albany, NY</Text>
-//           <Text style={styles.videoDate}>11.17.22</Text>
-//         </View>
-//         {/* Add more video cards as needed */}
-//       </ScrollView>
-
-//       {/* Photos Section */}
-//       <Text style={styles.sectionTitle}>Photos</Text>
-//       <ScrollView horizontal style={styles.horizontalScroll}>
-//         <Image style={styles.photoImage} source={{ uri: 'https://via.placeholder.com/100' }} />
-//         <Image style={styles.photoImage} source={{ uri: 'https://via.placeholder.com/100' }} />
-//         <Image style={styles.photoImage} source={{ uri: 'https://via.placeholder.com/100' }} />
-//         {/* Add more photos as needed */}
-//       </ScrollView>
-//       <TouchableOpacity>
-//         <Text style={styles.seeMoreText}>SEE MORE</Text>
-//       </TouchableOpacity>
-//     </ScrollView>
-//   );
-// };
-
-// // Bottom Tab Navigator
-// // const Tab = createBottomTabNavigator();
-
-// // function MyTabs() {
-// //   return (
-// //     <Tab.Navigator
-// //       screenOptions={({ route }) => ({
-// //         tabBarIcon: ({ focused, color, size }) => {
-// //           let iconName;
-
-// //           if (route.name === 'Home') {
-// //             iconName = focused ? 'home' : 'home-outline';
-// //           } else if (route.name === 'Explore') {
-// //             iconName = focused ? 'search' : 'search-outline';
-// //           } else if (route.name === 'Profile') {
-// //             iconName = focused ? 'person' : 'person-outline';
-// //           } else if (route.name === 'Settings') {
-// //             iconName = focused ? 'settings' : 'settings-outline';
-// //           }
-
-// //           return <Icon name={iconName} size={size} color={color} />;
-// //         },
-// //         tabBarActiveTintColor: 'black',
-// //         tabBarInactiveTintColor: 'gray',
-// //       })}
-// //     >
-// //       <Tab.Screen name="Home" component={ProfileScreen} />
-// //       <Tab.Screen name="Explore" component={ProfileScreen} />
-// //       <Tab.Screen name="Profile" component={ProfileScreen} />
-// //       <Tab.Screen name="Settings" component={ProfileScreen} />
-// //     </Tab.Navigator>
-// //   );
-// // }
-
-// // export default function Profile() {
-// //   return (
-// //     <NavigationContainer>
-// //       <MyTabs />
-// //     </NavigationContainer>
-// //   );
-// // }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     paddingHorizontal: 16,
-//     backgroundColor: '#f3f3f3',
-//   },
-//   header: {
-//     flexDirection: 'row',
-//     alignItems: 'center',
-//     padding: 16,
-//     backgroundColor: '#e9e9e9',
-//     borderRadius: 10,
-//     marginBottom: 16,
-//   },
-//   profileImage: {
-//     width: 80,
-//     height: 80,
-//     borderRadius: 40,
-//     marginRight: 16,
-//   },
-//   username: {
-//     fontSize: 20,
-//     fontWeight: 'bold',
-//   },
-//   joinedDate: {
-//     fontSize: 12,
-//     color: 'gray',
-//   },
-//   userStats: {
-//     fontSize: 12,
-//     color: 'gray',
-//   },
-//   sectionTitle: {
-//     fontSize: 18,
-//     fontWeight: 'bold',
-//     marginVertical: 10,
-//   },
-//   horizontalScroll: {
-//     marginVertical: 10,
-//   },
-//   videoCard: {
-//     marginRight: 10,
-//     width: 150,
-//   },
-//   videoImage: {
-//     width: '100%',
-//     height: 100,
-//     borderRadius: 10,
-//   },
-//   videoDescription: {
-//     fontSize: 12,
-//     marginTop: 5,
-//   },
-//   videoDate: {
-//     fontSize: 12,
-//     color: 'gray',
-//   },
-//   photoImage: {
-//     width: 100,
-//     height: 100,
-//     borderRadius: 10,
-//     marginRight: 10,
-//   },
-//   seeMoreText: {
-//     color: 'blue',
-//     marginTop: 10,
-//     fontWeight: 'bold',
-//   },
-// });
-
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Alert, FlatList } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, Alert, FlatList, Dimensions } from 'react-native';
 import { Video } from 'expo-av';
+
+// Get screen dimensions
+const { width, height } = Dimensions.get('window');
 
 const ProfileScreen = () => {
   const [isFollowing, setIsFollowing] = useState(false);
@@ -176,7 +20,7 @@ const ProfileScreen = () => {
   const VideoCard = ({ videoUri, description, date }) => (
     <View style={styles.videoCard}>
       <Video
-        style={styles.videoPlayer}
+        style={[styles.videoPlayer, { width: width - 32, height: (width - 32) * 0.56 }]} // responsive video size
         source={{ uri: videoUri }}
         useNativeControls
         resizeMode="contain"
@@ -195,14 +39,12 @@ const ProfileScreen = () => {
     </ScrollView>
   );
 
-  // Sample data for setlists
   const setlists = [
     { id: '1', name: 'Concert in the Park', date: '11.01.22', songs: ['Song A', 'Song B', 'Song C'] },
     { id: '2', name: 'Live at the Arena', date: '11.10.22', songs: ['Song D', 'Song E', 'Song F'] },
     { id: '3', name: 'Summer Festival', date: '12.05.22', songs: ['Song G', 'Song H', 'Song I'] },
   ];
 
-  // Render function for each setlist item
   const renderSetlistItem = ({ item }) => (
     <View style={styles.setlistCard}>
       <Text style={styles.setlistTitle}>{item.name}</Text>
@@ -213,22 +55,20 @@ const ProfileScreen = () => {
 
   return (
     <ScrollView style={styles.container}>
-      {/* Header Section */}
       <View style={styles.header}>
-        <Image style={styles.profileImage} source={{ uri: 'https://images.unsplash.com/photo-1731596691311-5955c052b66e?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }} />
-        <View>
-          <Text style={styles.username}> Username</Text>
-          <Text style={styles.joinedDate}> JOINED date</Text>
-          <Text style={styles.userStats}> 10 Set lists made</Text>
-          <Text style={styles.userStats}> 1 Videos posted</Text>
-          <Text style={styles.userStats}> 4 Photos posted</Text>
+        <Image style={styles.profileImage} source={{ uri: 'https://images.unsplash.com/photo-1709917241494-48fdf74f2640?q=80&w=2268&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }} />
+        <View style={styles.profileInfo}>
+          <Text style={styles.username}>Alice Doe</Text>
+          <Text style={styles.joinedDate}>Joined: 01/02/2024</Text>
+          <Text style={styles.userStats}>10 Setlists</Text>
+          <Text style={styles.userStats}>1 Video</Text>
+          <Text style={styles.userStats}>4 Photos</Text>
         </View>
         <TouchableOpacity style={styles.followButton} onPress={handleFollow}>
           <Text style={styles.followButtonText}>{isFollowing ? 'Unfollow' : 'Follow'}</Text>
         </TouchableOpacity>
       </View>
 
-      {/* Videos Section */}
       <Text style={styles.sectionTitle}>Videos</Text>
       <ScrollView horizontal style={styles.horizontalScroll}>
         <VideoCard
@@ -236,20 +76,11 @@ const ProfileScreen = () => {
           description="Cool Band Live | Albany, NY"
           date="11.17.22"
         />
-        {/* Add more VideoCard components if needed */}
       </ScrollView>
 
-      {/* Photos Section */}
       <Text style={styles.sectionTitle}>Photos</Text>
-      <PhotoRow
-        photoUris={[
-          'https://images.unsplash.com/photo-1731596691311-5955c052b66e?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-          'https://images.unsplash.com/photo-1731596691311-5955c052b66e?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-          'https://images.unsplash.com/photo-1731596691311-5955c052b66e?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        ]}
-      />
+      <PhotoRow photoUris={['https://images.unsplash.com/photo-1709917241494-48fdf74f2640?q=80&w=2268&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'https://images.unsplash.com/photo-1709917241494-48fdf74f2640?q=80&w=2268&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D']} />
 
-      {/* Setlists Section */}
       <Text style={styles.sectionTitle}>Setlists</Text>
       <FlatList
         data={setlists}
@@ -269,17 +100,21 @@ const ProfileScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 16,
-    backgroundColor: '#f3f3f3',
+    padding: 16,
+    backgroundColor: '#f9fafc',
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 16,
-    backgroundColor: '#e9e9e9',
+    backgroundColor: '#ffffff',
     borderRadius: 10,
+    padding: 16,
     marginBottom: 16,
-    justifyContent: 'space-between',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
   },
   profileImage: {
     width: 80,
@@ -287,67 +122,81 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     marginRight: 16,
   },
+  profileInfo: {
+    flex: 1,
+  },
   username: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: '#333',
   },
   joinedDate: {
-    fontSize: 12,
-    color: 'gray',
+    fontSize: 14,
+    color: '#666',
+    marginVertical: 2,
   },
   userStats: {
-    fontSize: 12,
-    color: 'gray',
+    fontSize: 14,
+    color: '#555',
   },
   followButton: {
-    backgroundColor: '#007AFF',
-    padding: 10,
+    backgroundColor: '#007bff',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
     borderRadius: 20,
   },
   followButtonText: {
-    color: '#fff',
+    color: '#ffffff',
     fontSize: 14,
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginVertical: 10,
+    color: '#333',
+    marginVertical: 12,
   },
   horizontalScroll: {
-    marginVertical: 10,
+    marginBottom: 16,
   },
   videoCard: {
-    marginRight: 10,
-    width: 150,
+    marginRight: 12,
+    borderRadius: 10,
+    overflow: 'hidden',
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
   },
   videoPlayer: {
-    width: 150,
-    height: 100,
-    borderRadius: 10,
-    backgroundColor: 'black',
+    width: '100%', // Full width
+    height: 200,   // Adjust height proportionally
   },
   videoDescription: {
     fontSize: 12,
-    marginTop: 5,
+    color: '#333',
+    padding: 8,
   },
   videoDate: {
     fontSize: 12,
-    color: 'gray',
+    color: '#666',
+    padding: 8,
   },
   photoImage: {
     width: 100,
     height: 100,
     borderRadius: 10,
-    marginRight: 10,
+    marginRight: 12,
   },
   setlistContainer: {
-    paddingVertical: 10,
+    paddingBottom: 16,
   },
   setlistCard: {
     backgroundColor: '#fff',
-    padding: 10,
-    marginVertical: 8,
     borderRadius: 10,
+    padding: 12,
+    marginVertical: 8,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -357,21 +206,23 @@ const styles = StyleSheet.create({
   setlistTitle: {
     fontSize: 16,
     fontWeight: 'bold',
+    color: '#333',
   },
   setlistDate: {
     fontSize: 14,
-    color: 'gray',
-    marginVertical: 5,
+    color: '#666',
+    marginVertical: 4,
   },
   setlistSongs: {
-    fontSize: 12,
-    color: '#666',
+    fontSize: 14,
+    color: '#555',
   },
   seeMoreText: {
-    color: 'blue',
-    marginTop: 10,
-    fontWeight: 'bold',
+    fontSize: 16,
+    color: '#007bff',
     textAlign: 'center',
+    fontWeight: 'bold',
+    marginVertical: 16,
   },
 });
 
