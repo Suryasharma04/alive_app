@@ -85,6 +85,8 @@ const _renderAllUpcomingShows = ({ item, navigation }) => (
   </TouchableOpacity>
 );
 
+
+
 function MoreSetListsScreen({ route, navigation }) {
   const { fullList } = route.params;  // Access the full list from the params
 
@@ -205,6 +207,7 @@ function ArtistPage({ navigation, route }) {
             <Text style={styles.text}>Tagged</Text>
           </View>
         </View>
+      
       </ScrollView>
     </ImageBackground>
   );
@@ -230,6 +233,7 @@ export default function App() {
           options={{ headerShown: false }}
         />
         <Stack.Screen name="SetList" component={SetListScreen} options={{ headerShown: true }} />
+
       </Stack.Navigator>
     </ArtistProvider>
   );
