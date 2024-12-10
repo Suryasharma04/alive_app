@@ -108,7 +108,8 @@ const styles = StyleSheet.create({
   button: {
     alignItems: "left",
     padding: 10,
-    fontSize: 20
+    fontSize: 17,
+    fontWeight: '500'
   },
   section: {
     paddingTop: 12
@@ -118,13 +119,14 @@ const styles = StyleSheet.create({
     paddingVertical: 8
   },
   sectionHeaderText: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: '600',
     color: '#a7a7a7',
     textTransform: 'uppercase',
     letterSpacing: 1.2
+  },
   }
-});
+);
 
 
 export default SettingsScreen;
