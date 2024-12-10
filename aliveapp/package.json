@@ -35,8 +35,7 @@
     "react-redux": "^9.1.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0",
-    "@react-native-community/cli": "latest"
+    "@babel/core": "^7.20.0"
   },
   "proxy": "http://localhost:3000",
   "private": true
