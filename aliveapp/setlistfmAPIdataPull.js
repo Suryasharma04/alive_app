@@ -2,7 +2,7 @@ import populateUpcomingShowsData from './upcomingShowsAPIDataPull.js';
 import axios from 'axios';
 import mysql from 'mysql2/promise';
 
-const artistList = 'http://musicbrainz.org/ws/2/artist/?query=releasecount:[50 TO *] AND begin:[2000 TO *]&limit=500&fmt=json';
+const artistList = 'http://musicbrainz.org/ws/2/artist/?query=releasecount:[30 TO *] AND begin:[2000 TO *]&limit=3000&fmt=json';
 
 const populateDatabase = async (artistList) => {
   const getArtistMBID = async (artistName) => {
