@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, ActivityIndicator, Text } from 'react-native';
-import ConcertScreen from '../components/Concert';
+import EventScreen from '../components/Map';
 
-const ArtistName = ({route}) => {
-  const { artist, dateOfShow} = route.params;
+const UpcomingShow = ({route}) => {
+  const { artist, showVenue, dateOfShow} = route.params;
 
   const [concertData, setConcertData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null); // Added error state
   const [aName, setArtistName] = useState(artist); // Example artist
   const [showDate, setDate] = useState(dateOfShow); // Example date
+  const [venueName, setVenue] = useState(showVenue);
 
   console.log("passed artist name:", artist);
+  console.log("passed venue name:", showVenue);
   console.log("passed date:", dateOfShow);
 
   useEffect(() => {
@@ -20,9 +22,10 @@ const ArtistName = ({route}) => {
       setError(null); // Reset error state
 
       try {
-        const apiUrl = 'http://11.20.177.42:3000/setlists';
+        const apiUrl = 'http://11.20.177.42:3000/upcomingShows';
         const queryParams = {
           artistName: aName,
+          venue: venueName,
           date: showDate,
         };
 
@@ -48,7 +51,7 @@ const ArtistName = ({route}) => {
     };
 
     getArtistData();
-  }, [aName, showDate]); // Re-run when artist name or date changes
+  }, [aName, venueName, showDate]); // Re-run when artist name or date changes
 
   console.log(concertData);
 
@@ -87,28 +90,24 @@ const ArtistName = ({route}) => {
   // Destructure properties from the object
   const {
     artist_name: artistName,
-    date,
+    show_date: date,
     venue_name: venue,
     venue_address: address,
-    setlist_songs: setList,
-    videos,
+    venue_capacity: capacity,
+    artist_image: artistImage
   } = concertData[0];
 
   //console.log(data);
 
-  //concert data is just the full .json string right now, so figure out how to destructure the .json data
-
-  console.log('Set List =', setList);
-
   return (
     <View style={styles.container}>
-      <ConcertScreen
+      <EventScreen
         artistName={artistName}
         venue={venue}
         address={address}
-        date={date.substring(0, 10)}
-        setList={setList.split(',')}  // Convert to array if needed
-        videoThumbnails={videos || ''}  // Convert to array if needed
+        date={date.substring(0, 10)} // Convert to array if needed
+        capacity={capacity || ''}  // Convert to array if needed
+        artistImage={artistImage}
       />
     </View>
   );
@@ -123,4 +122,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ArtistName;
+export default UpcomingShow;
