@@ -116,7 +116,7 @@
 //           name="Explore"
 //           component={ExploreFunction}
 //           options={{ headerShown: false }}
-       
+
 //         />
 //         <Tab.Screen
 //           name="Profile"
@@ -152,6 +152,7 @@ import ArtistName from './SetLists/ArtistName';
 // Import your new screens
 import ExplorePage from './App_Explore.js';
 import Concert from './Concert';
+import UpcomingShow from './UpcomingShows/UpcomingShows.js';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -191,7 +192,10 @@ function HomeStack() {
       />
       <Stack.Screen
         name="ArtistName"
-        component={ArtistName}/>
+        component={ArtistName} />
+      <Stack.Screen
+        name="UpcomingShow"
+        component={UpcomingShow} />
     </Stack.Navigator>
   );
 }

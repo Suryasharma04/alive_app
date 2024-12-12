@@ -1,6 +1,8 @@
+import populateUpcomingShowsData from './upcomingShowsAPIDataPull.js';
+import axios from 'axios';
+import mysql from 'mysql2/promise';
 
-const axios = require('axios');
-const artistList = 'http://musicbrainz.org/ws/2/artist/?query=releasecount:[50 TO *] AND begin:[2000 TO *]&limit=10&fmt=json';
+const artistList = 'http://musicbrainz.org/ws/2/artist/?query=releasecount:[30 TO *] AND begin:[2000 TO *]&limit=10000&fmt=json';
 
 const populateDatabase = async (artistList) => {
   const getArtistMBID = async (artistName) => {
@@ -19,15 +21,9 @@ const populateDatabase = async (artistList) => {
     }
   };
   
-  // Example Usage
-  //aMbid = getArtistMBID("Coldplay");
-  //console.log(aMbid);
-  
-  const mysql = require("mysql2/promise");
-  
   const addToDatabase = async (artistMbid) => {
-    const baseUrl = `https://api.setlist.fm/rest/1.0/artist/${artistMbid}/setlists`; // Replace {artistMbid} with actual MBID
-    const apiKey = "B5lJa2tqhLW0kpqvDKStipLxUBYP10R9p1i7";
+    const baseUrl = `https://api.setlist.fm/rest/1.0/artist/${artistMbid}/setlists`;
+    const apiKey = "E_w0OIVVrI17z6LH_feXnH7MzI0XHOCjEcIG";
   
     const dbConfig = {
       host: "istanbul.mysql.database.azure.com",
@@ -68,6 +64,8 @@ const populateDatabase = async (artistList) => {
             `SELECT id FROM Artist WHERE name = ?`,
             [setlist.artist.name]
           );
+
+          //console.log(setlist.artist.name);
   
           let artistId;
   
@@ -77,8 +75,8 @@ const populateDatabase = async (artistList) => {
           } else {
             // Artist does not exist, insert into Artist Table
             const [artistResult] = await connection.execute(
-              `INSERT INTO Artist (name) VALUES (?) ON DUPLICATE KEY UPDATE id=LAST_INSERT_ID(id)`,
-              [setlist.artist.name]
+              `INSERT INTO Artist (name, imageLink) VALUES (?, ?) ON DUPLICATE KEY UPDATE id=LAST_INSERT_ID(id)`,
+              [setlist.artist.name, null]
             );
             artistId = artistResult.insertId;
           }
@@ -193,7 +191,7 @@ const populateDatabase = async (artistList) => {
   
       console.log("Database populated successfully!");
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error:", error.message);
     } finally {
       // Close the database connection
       await connection.end();
@@ -204,10 +202,13 @@ const populateDatabase = async (artistList) => {
     const response = await axios.get(artistList);
     const artists = response.data.artists;
 
+    //console.log(artists);
+
     for (const artist of artists) {
       const aMbid = await getArtistMBID(artist.name);
       if (aMbid) {
         await addToDatabase(aMbid); // Process artist if MBID is valid
+        await populateUpcomingShowsData(artist.name);
       }
     }
   } catch (error) {
@@ -216,5 +217,3 @@ const populateDatabase = async (artistList) => {
 }
 
 populateDatabase(artistList);
-//populateDatabase works right now but currently only populates the database with a setlist of Bob Dylan.
-// Have to figure out how to populate the database with multiple setlists and artistss

@@ -2,23 +2,34 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
-export default function EventScreen() {
+function monthNumberToName(monthNumber) {
+  const months = [
+      "January", "February", "March", "April", "May", "June", 
+      "July", "August", "September", "October", "November", "December"
+  ];
+  
+  return months[monthNumber - 1];
+}
+
+const EventScreen = ({ artistName, venue, address, date, capacity, artistImage }) => {
+  const [year, numMonth, day] = date.split('-');
+  const month = monthNumberToName(parseInt(numMonth));
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.artistName}>Artist Name</Text>
+      <Text style={styles.artistName}>{artistName}</Text>
 
       <Image
-        source={{ uri: 'https://images.unsplash.com/photo-1522158637959-30385a09e0da?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }} // Replace with actual image URL
+        source={{ uri: artistImage }} // Replace with actual image URL
         style={styles.venueImage}
       />
 
       <View style={styles.detailsContainer}>
-        <Text style={styles.venueName}>MetLife Stadium</Text>
-        <Text style={styles.venueAddress}>One MetLife Stadium Dr, East Rutherford, NJ 07073</Text>
+        <Text style={styles.venueName}>{venue}</Text>
+        <Text style={styles.venueAddress}>{address}</Text>
 
         <View style={styles.dateTimeContainer}>
-          <Text style={styles.eventDate}>Dec. 5th, 2024</Text>
-          <Text style={styles.eventTime}>7:00PM</Text>
+          <Text style={styles.eventDate}>{month} {day}, {year}</Text>
+          <Text style={styles.eventTime}></Text>
         </View>
 
         <TouchableOpacity style={styles.ticketButton}>
@@ -40,7 +51,7 @@ export default function EventScreen() {
       </View>
     </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -120,3 +131,5 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 });
+
+export default EventScreen;
