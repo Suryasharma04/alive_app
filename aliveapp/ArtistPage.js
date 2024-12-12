@@ -2,11 +2,13 @@
 
 import { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ImageBackground, Image, ScrollView, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, Image, ScrollView, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { createContext, useState, useContext } from 'react';
 import SetListScreen from './SetLists/ArtistName.js';
+import imageBackground from './assets/image_background.jpg';
+import artistProfile from './assets/artist_profile.jpg';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,67 +31,95 @@ export const ArtistProvider = ({ children }) => {
   );
 };
 
-const _renderSetLists = ({ item }, navigation) => (
-  <TouchableOpacity onPress={() => navigation.navigate('SetList', { item })}>
-    <View style={styles.item}>
-      <Text
-        style={styles.venue}
-        numberOfLines={1}            // Limits to 1 line
-        ellipsizeMode="tail"
-      >{item.venue}</Text>
-      <Text style={styles.date}>{item.date}</Text>
-    </View>
-    <View style={styles.horizontalLine2} />
-  </TouchableOpacity>
-);
+const _renderSetLists = ({ item }, navigation) => {
+  const [year, month, day] = item.date.split('-');
+  const y = year.substring(2);
+  const showDate = month.concat(".", day, ".", y);
+  const normalDate = item.date;
+  const artistName = item.aName;
+  console.log(normalDate);
+  console.log(artistName);
+  console.log(item);
+  return (
+    <TouchableOpacity onPress={() => 
+    navigation.navigate('ArtistName', {
+      artistName,
+      normalDate,
+       })}>
+      <View style={styles.item}>
+        <Text
+          style={styles.venue}
+          numberOfLines={1}            // Limits to 1 line
+          ellipsizeMode="tail"
+        >{item.venue}</Text>
+        <Text style={styles.date}>{showDate}</Text>
+      </View>
+      <View style={styles.horizontalLine2} />
+    </TouchableOpacity>
+  );
+};
 
-const _renderUpcomingShows = ({ item, navigation }) => (
-  <TouchableOpacity onPress={() => goToShows(item, navigation)}>
-    <View style={styles.item}>
-      <Text
-        style={styles.venue}
-        numberOfLines={1}            // Limits to 1 line
-        ellipsizeMode="tail"
-      >{item.venue}</Text>
-      <Text style={styles.date}>{item.date}</Text>
-    </View>
-    <View style={styles.horizontalLine2} />
-  </TouchableOpacity>
-);
+const _renderUpcomingShows = ({ item, navigation }) => {
+  const [year, month, day] = item.date.split('-');
+  const y = year.substring(2);
+  const showDate = month.concat(".", day, ".", y);
+  return (
+    <TouchableOpacity onPress={() => goToShows(item, navigation)}>
+      <View style={styles.item}>
+        <Text
+          style={styles.venue}
+          numberOfLines={1}            // Limits to 1 line
+          ellipsizeMode="tail"
+        >{item.venue}</Text>
+        <Text style={styles.date}>{showDate}</Text>
+      </View>
+      <View style={styles.horizontalLine2} />
+    </TouchableOpacity>
+  );
+}
 
-const _renderAllSetLists = ({ item, navigation }) => (
-  <TouchableOpacity onPress={() => goToSetList(item, navigation)}>
-    <View style={styles.item2}>
-      <Text
-        style={styles.venue}
-        numberOfLines={1}            // Limits to 1 line
-        ellipsizeMode="tail"
-      >{item.venue}</Text>
-      <Text style={styles.date}>{item.date}</Text>
-    </View>
-    <View style={styles.horizontalLine3} />
-  </TouchableOpacity>
-);
+const _renderAllSetLists = ({ item, navigation }) => {
+  const [year, month, day] = item.date.split('-');
+  const y = year.substring(2);
+  const showDate = month.concat(".", day, ".", y);
+  return (
+    <TouchableOpacity onPress={() => goToSetList(item, navigation)}>
+      <View style={styles.item2}>
+        <Text
+          style={styles.venue}
+          numberOfLines={1}            // Limits to 1 line
+          ellipsizeMode="tail"
+        >{item.venue}</Text>
+        <Text style={styles.date}>{showDate}</Text>
+      </View>
+      <View style={styles.horizontalLine3} />
+    </TouchableOpacity>
+  );
+}
 
-const _renderAllUpcomingShows = ({ item, navigation }) => (
-  <TouchableOpacity onPress={() => goToShows(item, navigation)}>
-    <View style={styles.item2}>
-      <Text
-        style={styles.venue}
-        numberOfLines={1}            // Limits to 1 line
-        ellipsizeMode="tail"
-      >{item.venue}</Text>
-      <Text style={styles.date}>{item.date}</Text>
-    </View>
-    <View style={styles.horizontalLine3} />
-  </TouchableOpacity>
-);
-
+const _renderAllUpcomingShows = ({ item, navigation }) => {
+  const [year, month, day] = item.date.split('-');
+  const y = year.substring(2);
+  const showDate = month.concat(".", day, ".", y);
+  return (
+    <TouchableOpacity onPress={() => goToShows(item, navigation)}>
+      <View style={styles.item2}>
+        <Text
+          style={styles.venue}
+          numberOfLines={1}            // Limits to 1 line
+          ellipsizeMode="tail"
+        >{item.venue}</Text>
+        <Text style={styles.date}>{showDate}</Text>
+      </View>
+      <View style={styles.horizontalLine3} />
+    </TouchableOpacity>
+  );
+}
 
 
 function MoreSetListsScreen({ route, navigation }) {
   const { fullList } = route.params;  // Access the full list from the params
-
+  console.log(fullList);
   return (
     <View style={styles.listPage}>
       <FlatList
@@ -119,40 +149,18 @@ function MoreUpcomingShowsScreen({ route, navigation }) {
 
 function ArtistPage({ navigation, route }) {
 
-  const { artistName, setArtistName } = useArtist();
-  const artistHeader = route.params?.artistHeader || "Artist Page";
+  const { artistName } = route.params;
+  //const { artistName, setArtistName } = useArtist();
+  console.log("artistName:", route.params.artistName);
 
-  useEffect(() => {
-    navigation.setOptions({ title: artistHeader }); // Dynamically update the header title
-  }, [artistHeader]);
+  const [ArtistData, setArtistData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [aName, setAName] = useState(artistName);
 
-  let aPageSetLists = [
-    { venue: "Great Venue, Ithaca NY", date: "10.13.24", page: "" },
-    { venue: "Large Place, Brooklyn NY", date: "10.11.24", page: "" },
-    { venue: "Cool Theater, Philadelphia PA", date: "10.8.24", page: "" },
-    { venue: "Random Hall, Pittsburgh PA", date: "10.6.24", page: "" },
-    { venue: "The Venue, Nashville TN", date: "10.2.24", page: "" },
-  ]
-
-  let aPageShows = [
-    { venue: "The Real Stage, Boston MA", date: "10.16.24", page: "" },
-    { venue: "Spectacular Place, Boston MA", date: "10.17.24", page: "" },
-    { venue: "Another Venue, Montreal QC", date: "10.20.24", page: "" },
-    { venue: "Cool Hall, Montreal QC", date: "10.22.24", page: "" },
-    { venue: "The Venue, Toronto ON", date: "10.23.24", page: "" },
-  ]
-
-  const limitedSetLists = aPageSetLists.slice(0, 3);
-  const limitedShows = aPageShows.slice(0, 3);
-
-  const goToMoreSetLists = () => {
-    //navigation.setOptions({ headerShown: false });
-    navigation.navigate('MoreSetLists', { fullList: aPageSetLists });
-  };
-  const goToMoreShows = () => {
-    //navigation.setOptions({ headerShown: false });
-    navigation.navigate('MoreShows', { fullList: aPageShows });
-  };
+  // useEffect(() => {
+  //   navigation.setOptions({ title: artistHeader }); // Dynamically update the header title
+  // }, [artistHeader]);
 
   // useEffect(() => {
   //   navigation.setOptions({ headerShown: false });  // Hide header on ArtistPage
@@ -162,16 +170,125 @@ function ArtistPage({ navigation, route }) {
   //   };
   // }, [navigation]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const artistName = route.params?.artist; // Access artist name from route params
+      //if (!artistName) return; // Handle missing artist name
+
+      try {
+        const apiUrl = 'http://172.20.10.2:3000/artists';
+
+        const queryParams = {
+          artistName: aName,
+        };
+        const queryString = new URLSearchParams(queryParams).toString();
+        const fullUrl = `${apiUrl}?${queryString}`;
+        // console.log(fullUrl);
+
+        const response = await fetch(fullUrl); // Fetch data from backend
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        // console.log("data returned:", data);
+        setArtistData(data);
+        setLoading(false); // Set loading state to false
+      } catch (error) {
+        console.error('Error fetching artist data:', error);
+        setError(error); // Set error state
+      }
+    };
+
+    fetchData();
+  }, [artistName]);
+
+  //console.log(ArtistData);
+
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <View style={styles.container}>
+        <Text>{error}</Text>
+      </View>
+    );
+  }
+
+  // No data state
+  if (!ArtistData || ArtistData.length === 0) {
+    return (
+      <View style={styles.container}>
+        <Text>No concert data available.</Text>
+      </View>
+    );
+  }
+
+  const {
+    imageLink: artistPicture,
+    upcoming_shows: upcomingShows,
+    set_lists: setLists,
+  } = ArtistData;
+
+  const imgLink = artistPicture ? { uri: artistPicture } : artistProfile;
+
+  console.log("imageLink:", artistPicture);
+  console.log("upcomingShows:", upcomingShows);
+  console.log("setLists:", setLists);
+
+  const goToMoreSetLists = () => {
+    //navigation.setOptions({ headerShown: false });
+    navigation.navigate('MoreSetLists', { fullList: setLists });
+  };
+  const goToMoreShows = () => {
+    //navigation.setOptions({ headerShown: false });
+    navigation.navigate('MoreShows', { fullList: upcomingShows });
+  };
+
+  let limitedSetLists;
+  if (setLists == null) {
+    limitedSetLists = setLists;
+  } else {
+    if (setLists.length > 3) {
+      limitedSetLists = setLists.slice(0, 3);
+    }
+    else {
+      limitedSetLists = setLists;
+    }
+  }
+
+  let limitedShows;
+  if (upcomingShows == null) {
+    limitedShows = setLists;
+  } else {
+    if (upcomingShows.length > 3) {
+      limitedShows = upcomingShows.slice(0, 3);
+    }
+    else {
+      limitedShows = upcomingShows;
+    }
+  }
+
+  // console.log("limitedSetLists:", limitedSetLists);
+  // console.log("limitedShows:", limitedShows);
 
   return (
     <ImageBackground
-      source={require('./assets/image_background.jpg')}
+      source={imageBackground}
       style={styles.backgroundImage}
       blurRadius={3}>
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.container}>
           <Image
-            source={require('./assets/artist_profile.jpg')}
+            source={imgLink}
             style={styles.profilePicture}
           />
           <Text style={styles.artist}>{artistName}</Text>
@@ -182,7 +299,7 @@ function ArtistPage({ navigation, route }) {
               data={limitedSetLists}
               scrollEnabled={false}
               contentContainerStyle={styles.preview}
-              renderItem={(item) => _renderSetLists(item, navigation)}
+              renderItem={(item, aName) => _renderSetLists(item, navigation)}
               keyExtractor={(item, index) => index.toString()}
             />
             <TouchableOpacity onPress={goToMoreSetLists}>
@@ -207,13 +324,13 @@ function ArtistPage({ navigation, route }) {
             <Text style={styles.text}>Tagged</Text>
           </View>
         </View>
-      
+
       </ScrollView>
     </ImageBackground>
   );
 }
 
-export default function App() {
+function App() {
   return (
     <ArtistProvider>
       <Stack.Navigator>
@@ -391,3 +508,21 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   }
 });
+
+// let aPageSetLists = [
+//   { venue: "Great Venue, Ithaca NY", date: "10.13.24", page: "" },
+//   { venue: "Large Place, Brooklyn NY", date: "10.11.24", page: "" },
+//   { venue: "Cool Theater, Philadelphia PA", date: "10.8.24", page: "" },
+//   { venue: "Random Hall, Pittsburgh PA", date: "10.6.24", page: "" },
+//   { venue: "The Venue, Nashville TN", date: "10.2.24", page: "" },
+// ]
+
+// let aPageShows = [
+//   { venue: "The Real Stage, Boston MA", date: "10.16.24", page: "" },
+//   { venue: "Spectacular Place, Boston MA", date: "10.17.24", page: "" },
+//   { venue: "Another Venue, Montreal QC", date: "10.20.24", page: "" },
+//   { venue: "Cool Hall, Montreal QC", date: "10.22.24", page: "" },
+//   { venue: "The Venue, Toronto ON", date: "10.23.24", page: "" },
+// ]
+
+export default ArtistPage;

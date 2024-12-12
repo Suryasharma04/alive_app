@@ -120,6 +120,65 @@ app.get('/upcomingShows', async (req, res) => {
     }
 });
 
+app.get('/artists', async (req, res) => {
+    const artistName = req.query.artistName; // Specific param for artist name
+
+    if (!artistName) {
+        return res.status(400).json({ error: 'Missing artistName parameter' });
+    }
+
+    const query = `
+      SELECT 
+    Artist.id,
+    Artist.imageLink,
+    (SELECT 
+         JSON_ARRAYAGG(
+             JSON_OBJECT(
+                 'date', UpcomingShows.date,
+                 'venue', Venue.name
+             )
+         )
+     FROM 
+         UpcomingShows
+     LEFT JOIN 
+         Venue ON UpcomingShows.venue_id = Venue.id
+     WHERE 
+         UpcomingShows.artist_id = Artist.id
+    ) AS upcoming_shows,
+    (SELECT 
+         JSON_ARRAYAGG(
+             JSON_OBJECT(
+                 'date', Setlists.date,
+                 'venue', VenueForSetlists.name
+             )
+         )
+     FROM 
+         Setlists
+     LEFT JOIN 
+         Venue AS VenueForSetlists ON Setlists.venue_id = VenueForSetlists.id
+     WHERE 
+         Setlists.artist_id = Artist.id
+    ) AS set_lists
+FROM 
+    Artist
+WHERE 
+    Artist.name = ?
+GROUP BY 
+    Artist.id, Artist.imageLink;
+    `;
+
+    try {
+        const [rows] = await db.promise().query(query, [artistName]); // Use parameterized query
+        if (rows.length === 0) {
+            return res.status(404).json({ error: 'Artist not found' });
+        }
+        const artistData = rows[0];
+        res.json(artistData); // Return artist info, upcoming shows, and setlists
+    } catch (error) {
+        console.error('Error fetching artist data:', error.message);
+        res.status(500).json({ error: 'Error fetching artist data' });
+    }
+});
 
 
 

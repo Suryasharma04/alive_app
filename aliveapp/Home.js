@@ -5,11 +5,15 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
-import ArtistPage from './ArtistPage';
+import ArtistPage from './ArtistPage.js';
 import * as SetLists from './SetLists';
 import ArtistName from './SetLists/ArtistName';
 import UpcomingShow from './UpcomingShows/UpcomingShows';
-
+import artistProfileImage from './assets/artist_profile.jpg';
+import bwConcertImage from './assets/bwConcert.jpg';
+import imageBackgroundImage from './assets/image_background.jpg';
+import austinNeillImage from './assets/austin-neill-247047-unsplash.jpg';
+import backgroundImage from './assets/bwConcert.jpg';
 
 const Stack = createStackNavigator();
 
@@ -19,14 +23,14 @@ export default function Home() {
     { picture: { uri: "https://www.jambase.com/wp-content/uploads/2024/02/goose-1480x832.png" }, name: "Goose", date: "11.12.2024" },
     { picture: { uri: "https://www.jambase.com/wp-content/uploads/2015/09/dead-company-may-2023-blakesberg-1480x832.jpg" }, name: "Dead & Company", date: "8.3.2024" },
     { picture: { uri: "https://www.jambase.com/wp-content/uploads/2015/06/above-and-beyond-profile-1480x832.jpg" }, name: "Above & Beyond", date: "3.17.2024" },
-    { picture: require("./assets/artist_profile.jpg"), name: "The Cherry Blues Project", date: "1.25.2014" },
+    { picture: { uri: artistProfileImage }, name: "The Cherry Blues Project", date: "1.25.2014" },
   ]
 
   let artistVideos = [
-    { picture: require("./assets/bwConcert.jpg"), title: "Video Title", date: "1.1.24" },
-    { picture: require("./assets/image_background.jpg"), title: "Epic Band Live", date: "2.24.23" },
-    { picture: require("./assets/austin-neill-247047-unsplash.jpg"), title: "The Band Live", date: "6.27.24" },
-  ]
+    { picture: { uri: bwConcertImage }, title: "Video Title", date: "1.1.24" },
+    { picture: { uri: imageBackgroundImage }, title: "Epic Band Live", date: "2.24.23" },
+    { picture: { uri: austinNeillImage }, title: "The Band Live", date: "6.27.24" },
+  ];
 
   let artistUpcomingShows = [
     { picture: { uri: "https://www.jambase.com/wp-content/uploads/2024/02/goose-1480x832.png" }, name: "Goose", venue: "Moody Center", date: "12.31.2024" },
@@ -57,7 +61,7 @@ export default function Home() {
     });
   };
 
-  const goToUpcomingShows = (item) => {
+  const goToUpcomingShow = (item) => {
     const [month, day, year] = item.date.split('.');
     const showDate = year.concat("-", month, "-", day);
 
@@ -70,6 +74,11 @@ export default function Home() {
       showVenue: item.venue,
       dateOfShow: showDate,
     });
+  };
+
+  const goToArtist = (item) => {
+    console.log("name: ", item.name);
+    navigation.navigate("ArtistPage", { artistName: item.name });
   };
 
 
@@ -90,7 +99,7 @@ export default function Home() {
   );
 
   const _renderArtists = ({ item }) => (
-    <TouchableOpacity onPress={() => navigation.navigate("ArtistPage", { artistName: item.name })}>
+    <TouchableOpacity onPress={() => goToArtist(item)}>
       <View style={styles.artist}>
         <Image
           source={item.picture}
@@ -107,7 +116,7 @@ export default function Home() {
     <TouchableOpacity onPress={() => goToVideos(item)}>
       <View style={styles.video}>
         <Image
-          source={item.picture}
+          source={item.picture.uri}
           style={styles.videoCover}
         />
         <View style={styles.videoText}>
@@ -121,7 +130,7 @@ export default function Home() {
   const _renderUpcomingShows = ({ item }) => {
     console.log("Rendering items:", item);
     return (
-      <TouchableOpacity onPress={() => goToUpcomingShows(item)}>
+      <TouchableOpacity onPress={() => goToUpcomingShow(item)}>
         <View style={styles.upcomingShow}>
           <Image
             source={item.picture}
@@ -142,7 +151,7 @@ export default function Home() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ImageBackground
-        source={require('./assets/bwConcert.jpg')}
+        source={backgroundImage}
         style={styles.backgroundImage}
         blurRadius={3}>
         <ScrollView contentContainerStyle={styles.container}>

@@ -22,7 +22,7 @@ const UpcomingShow = ({route}) => {
       setError(null); // Reset error state
 
       try {
-        const apiUrl = 'http://11.20.177.42:3000/upcomingShows';
+        const apiUrl = 'http://172.20.10.2:3000/upcomingShows';
         const queryParams = {
           artistName: aName,
           venue: venueName,

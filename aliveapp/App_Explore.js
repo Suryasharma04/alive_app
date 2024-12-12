@@ -191,6 +191,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, FlatList, ScrollView, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import concertPic1 from './assets/concertPic1.jpg';
 
 const ExplorePage = ({ navigation }) => {
   const [search, setSearch] = useState('');
@@ -202,9 +203,9 @@ const ExplorePage = ({ navigation }) => {
   ];
 
   const artists = [
-    { id: '1', name: 'Artist One', genre: 'Pop', image: require('./assets/concertPic1.jpg') },
-    { id: '2', name: 'Artist Two', genre: 'Rock', image: require('./assets/concertPic1.jpg') },
-    { id: '3', name: 'Artist Three', genre: 'Jazz', image: require('./assets/concertPic1.jpg') },
+    { id: '1', name: 'Artist One', genre: 'Pop', image: concertPic1 },
+    { id: '2', name: 'Artist Two', genre: 'Rock', image: concertPic1 },
+    { id: '3', name: 'Artist Three', genre: 'Jazz', image: concertPic1 },
     // Add more artists as needed
   ];
 

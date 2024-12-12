@@ -1,9 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, ActivityIndicator, Text } from 'react-native';
 import ConcertScreen from '../components/Concert';
+//import getVideos from '../YouTubeScraperClientSide';
 
-const ArtistName = ({route}) => {
-  const { artist, dateOfShow} = route.params;
+const getSetlistVideos = (artistName, setList, showDate) => {
+  const videos = [];
+  for (song in setList) {
+    const result = getVideos(artistName, song, showDate);
+    videos.push(result);
+  }
+  return videos;
+}
+
+const ArtistName = ({ route }) => {
+  const { artist, dateOfShow } = route.params;
 
   const [concertData, setConcertData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -20,7 +30,7 @@ const ArtistName = ({route}) => {
       setError(null); // Reset error state
 
       try {
-        const apiUrl = 'http://11.20.177.42:3000/setlists';
+        const apiUrl = 'http://172.20.10.2:3000/setlists';
         const queryParams = {
           artistName: aName,
           date: showDate,
@@ -37,7 +47,7 @@ const ArtistName = ({route}) => {
         }
 
         const data = await response.json();
-        //console.log(data);
+        console.log(data);
         setConcertData(data); // Update concert data
       } catch (err) {
         console.error('Error fetching data:', err.message);
@@ -94,6 +104,12 @@ const ArtistName = ({route}) => {
     videos,
   } = concertData[0];
 
+  const setListSongs = setList.split(',');
+  const formattedDate = date.substring(0, 10);
+
+  //const setListVideos = getSetlistVideos(artistName, setListSongs, date);
+  //console.log(setListVideos);
+
   //console.log(data);
 
   //concert data is just the full .json string right now, so figure out how to destructure the .json data
@@ -106,9 +122,9 @@ const ArtistName = ({route}) => {
         artistName={artistName}
         venue={venue}
         address={address}
-        date={date.substring(0, 10)}
-        setList={setList.split(',')}  // Convert to array if needed
-        videoThumbnails={videos || ''}  // Convert to array if needed
+        date={formattedDate}
+        setList={setListSongs}  // Convert to array if needed
+        videoThumbnails={''}  // Convert to array if needed
       />
     </View>
   );
