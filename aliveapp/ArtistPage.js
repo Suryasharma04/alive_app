@@ -176,7 +176,7 @@ function ArtistPage({ navigation, route }) {
       //if (!artistName) return; // Handle missing artist name
 
       try {
-        const apiUrl = 'http://172.20.10.2:3000/artists';
+        const apiUrl = 'http://147.129.22.204:3000/artists';
 
         const queryParams = {
           artistName: aName,

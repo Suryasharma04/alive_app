@@ -30,7 +30,7 @@ const ArtistName = ({ route }) => {
       setError(null); // Reset error state
 
       try {
-        const apiUrl = 'http://172.20.10.2:3000/setlists';
+        const apiUrl = 'http://147.129.22.204:3000/setlists';
         const queryParams = {
           artistName: aName,
           date: showDate,
